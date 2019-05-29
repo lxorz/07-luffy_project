@@ -2,31 +2,31 @@
   <div class="course">
     <div class="container clearfix">
       <ul class="coursebox">
-        <li v-for="(category,index) in categoryList" :key="category.id" :class="{active:index === currentIndex}" v-on:click="categoryClick(index)">
+        <li v-for="(category,index) in categoryList" :key="category.id" :class="{active:index === currentIndex}" v-on:click="categoryClick(index,category.id)">
           {{ category.name }}
         </li>
 
       </ul>
 
       <div class="courseList" >
-        <div class="detail" >
+        <div class="detail"  v-for="(course,index) in courseDetail" :key='course.id' @click="detailHandler(course.id)">
           <div class="head">
-            <img src="" alt="" class="backImg">
+            <img :src="course.course_img" alt="" class="backImg">
             <b class="mask"></b>
-            <p>Python开发21天入门</p>
+            <p>{{ course.name }}</p>
           </div>
           <div class="content">
-            <p>Python 以其简洁、优雅、高效的特点，成为目前最流行的4大主流开发语言</p>
+            <p>{{ course.brief }}</p>
             <div class="content-detail">
               <div>
                 <img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iMTFweCIgaGVpZ2h0PSIxMnB4IiB2aWV3Qm94PSIwIDAgMTEgMTIiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+CiAgICA8IS0tIEdlbmVyYXRvcjogU2tldGNoIDQ4LjIgKDQ3MzI3KSAtIGh0dHA6Ly93d3cuYm9oZW1pYW5jb2RpbmcuY29tL3NrZXRjaCAtLT4KICAgIDx0aXRsZT5TaGFwZTwvdGl0bGU+CiAgICA8ZGVzYz5DcmVhdGVkIHdpdGggU2tldGNoLjwvZGVzYz4KICAgIDxkZWZzPjwvZGVmcz4KICAgIDxnIGlkPSJSZWN0YW5nbGUtMiIgc3Ryb2tlPSJub25lIiBzdHJva2Utd2lkdGg9IjEiIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTE3LjAwMDAwMCwgLTkxLjAwMDAwMCkiPgogICAgICAgIDxnIGlkPSLkuKrkurrkuK3lv4MiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDE3LjAwMDAwMCwgOTEuMDAwMDAwKSIgZmlsbD0iIzlCOUI5QiIgZmlsbC1ydWxlPSJub256ZXJvIj4KICAgICAgICAgICAgPHBhdGggZD0iTTYuNzU4MjMwODEsNi42MjU2MzEwOCBMNC4yNDEzMzM5Miw2LjYyNTYzMTA4IEMxLjkwMjMxNTc1LDYuNjI1NjMxMDggMCw4LjQxNDM0Nzg0IDAsMTAuNjEzNjY4OSBMMCwxMC44NTAyOTE3IEMwLDEyIDEuODcxODkwNjUsMTIgNC4yNDEzMzM5MiwxMiBMNi43NTgyNDUzMiwxMiBDOS4wMzQ0NTQ2MSwxMiAxMSwxMiAxMSwxMC44NTAyOTE3IEwxMSwxMC42MTM2Njg5IEMxMSw4LjQxNDc3MDM2IDkuMDk3MTkwOTUsNi42MjU2MzEwOCA2Ljc1ODIzMDgxLDYuNjI1NjMxMDggWiBNNS4zNzQwNDEyNiw2LjMyMTI0MjAyIEM3LjIyNjIxNDM2LDYuMzIxMjQyMDIgOC43MzMxOTI0Nyw0LjkwMzU2Mjg4IDguNzMzMTkyNDcsMy4xNjA2Mjc4MiBDOC43MzMxOTI0NywxLjQxNzc3NDU0IDcuMjI2MjE0MzYsMCA1LjM3NDA0MTI2LDAgQzMuNTIxOTI2MiwwIDIuMDE0ODAzLDEuNDE4MDc0MzkgMi4wMTQ4MDMsMy4xNjA2OTU5NyBDMi4wMTQ4MDMsNC45MDMxODEyNSAzLjUyMTkyNjIsNi4zMjEyNDIwMiA1LjM3NDA0MTI2LDYuMzIxMjQyMDIgWiIgaWQ9IlNoYXBlIj48L3BhdGg+CiAgICAgICAgPC9nPgogICAgPC9nPgo8L3N2Zz4K" alt="">
-                <span>1836</span>
-                <span>初级</span>
-                <span class="span3">
-							         	  <span class="s">¥99.0</span>
+                <span>{{course.people}}</span>
+                <span>{{course.level}}</span>
+                <span class="span3" v-if="course.is_free">
+							         	  <span class="s">{{course.origin_price}}</span>
 							            <span  class="t">免费</span>
 							      </span>
-                <span class="span4">¥29</span>
+                <span class="span4" v-else>{{course.price}}</span>
 
               </div>
 
@@ -49,16 +49,19 @@
     data(){
       return {
         categoryList : [],//分类列表
-        currentIndex:0   //分类列表选中
+        currentIndex:0,   //分类列表选中
+        categoryId:0,  //获取所有课程列表id
+        courseDetail:[], //课程列表详情数据
       }
     },
   methods:{
-    categoryClick(index){
+    categoryClick(index,id){
       this.currentIndex = index;
-    }
-  },
-    created() {
-
+      this.categoryId = id;
+      this.getAllCategoryList();
+    },
+    //获取分类列表
+    getCategoryList(){
       this.$http.categoryList()
         .then(res=>{
           if(!res.data.error_no){
@@ -71,6 +74,34 @@
             this.categoryList.unshift(category);
           }
         })
+    },
+    //获取全部课程列表
+    getAllCategoryList(){
+      this.$http.allCategoryList(this.categoryId)
+        .then(res=>{
+          console.log(res);
+          if(!res.error_no){
+            this.courseDetail = res.data;
+          }
+        })
+        .catch(err=>{
+          console.log(err);
+        })
+    },
+
+    //课程详情 事件操作
+    detailHandler(id){
+      this.$router.push({
+        name:"course.detail",
+        params:{
+          detailId:id
+        }
+      })
+    },
+  },
+    created() {
+      this.getCategoryList();
+      this.getAllCategoryList();
     }
   };
 </script>

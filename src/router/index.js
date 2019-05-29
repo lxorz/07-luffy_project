@@ -9,6 +9,8 @@ import Home from '@/components/Home/Home';
 import Course from '@/components/Course/Course';
 import LightCourse from '@/components/LightCourse/LightCourse';
 import Micro from '@/components/Micro/Micro';
+import CourseDetail from '@/components/Course/CourseDetail';
+
 
 Vue.use(Router)
 
@@ -42,6 +44,12 @@ export default new Router({
       path:'/micro',
       name:'Micro',
       component:Micro
+    },
+
+    {
+      path:"/course/detail/web/:detailId",
+      name:"course.detail",
+      component:CourseDetail
     }
   ]
 })
